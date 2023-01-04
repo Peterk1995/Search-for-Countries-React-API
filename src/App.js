@@ -1,9 +1,13 @@
 import {useState, useEffect} from 'react'
 import axios from 'axios'
+import CountryDetails from './components/CountryDetails'
+
+
 
 const App = () => {
   const [countries, setCountries] = useState([])
   const [query, setQuery] = useState('')
+  const [selectedCountry, setSelectedCountry] = useState(null)
   
 
   useEffect(() => {
@@ -44,22 +48,11 @@ const App = () => {
       filteredCountries.map(country => (
       <div>
         {country.name}
+        <button onClick={() => setSelectedCountry(country)}> Show Details </button>
+
         </div>))}
-      {filteredCountries.length === 1 && (
-        <>
-          <h1>{filteredCountries[0].name}</h1>
-          <div>Capital: {filteredCountries[0].capital} </div>
-          <h2> Languages: </h2>
-          <ul>
-           {Object.values(filteredCountries[0].languages).map(language => (
-            <li key={language}> {language} </li>
-            ))}
-            </ul> 
-            <div>
-        Flag: <img src={filteredCountries[0].flags.png} alt={`Flag of ${filteredCountries[0].name}`} />
-      </div>
-        </>
-      )}
+        {filteredCountries.length === 1 && <CountryDetails country={filteredCountries[0]} /> }
+      {selectedCountry && <CountryDetails country={selectedCountry} />}  
       
     </div>
   )
