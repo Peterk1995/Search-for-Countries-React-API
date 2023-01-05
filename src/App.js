@@ -1,37 +1,10 @@
 import {useState, useEffect} from 'react';
 import axios from 'axios';
+import CountryDetails from './components/CountryDetails';
 
 // REACT_APP_API_KEY=a65c2a20ad2da72bd59c579eb77795af npm start
 
-const CountryDetails = ({country, weather}) => {
-  return (
-    <>
-      <h1>{country.name}</h1>
-      <div>Capital: {country.capital} </div>
-      <div> Area: {country.area} </div>
-      <h2> Languages: </h2>
-      <ul>
-        {Object.values(country.languages).map(language => (
-          <li key={language}> {language} </li>
-        ))}
-      </ul>
-      <div>
-        Flag: <img src={country.flags.png} alt={`Flag of ${country.name}`} />
-      </div>
-      {weather && (
-        <>
-          <h2>Weather in {country.capital}:</h2>
-          <div>Temperature: {weather.main.temp} °C</div>
-          <div>Description: {weather.weather[0].description}</div>
-          <img
-            src={`http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
-            alt={weather.weather[0].description}
-          />
-        </>
-      )}
-    </>
-  );
-};
+
 
 const App = () => {
   const [countries, setCountries] = useState([]);
@@ -68,7 +41,7 @@ const App = () => {
           )
         )
       );
-  }, []);
+  }, []); // Change to empty array when change
 
   const handleChange = event => {
     setQuery(event.target.value);
